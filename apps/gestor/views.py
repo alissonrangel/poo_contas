@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.db.models import Sum
-from djando.contrib.auth.decorators import login_required
-from djando.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 from .models import Conta, Pessoa
@@ -19,11 +19,13 @@ def user_login(request):
         else:
             messages.error(request, 'Usuário ou senha inválido.')
     return render(request, 'user_login.html', {})
-    
+
+@login_required(login_url='/login/')
 def home(request):
     lista_contas = Conta.objects.all()  # QuerySet
     return render(request, 'base.html', {'lista_contas' : lista_contas})
 
+@login_required(login_url='/login/')
 def adicionar_conta(request):
     if request.method == 'POST':
         form = ContaForm(request.POST)
@@ -33,16 +35,19 @@ def adicionar_conta(request):
     form = ContaForm()
     return render(request, 'adicionar_conta.html', {'form': form})
 
+@login_required(login_url='/login/')
 def lista_contas_pagar(request):
     contas_pagar = Conta.objects.filter(tipo_conta='PG')
     total = contas_pagar.aggregate(Sum('valor'))['valor__sum']
     return render(request, 'lista_contas_pagar.html', {'contas_pagar':contas_pagar, 'total': total})
 
+@login_required(login_url='/login/')
 def lista_contas_receber(request):
     contas_receber = Conta.objects.filter(tipo_conta='RB')
     total = contas_receber.aggregate(Sum('valor'))['valor__sum']
     return render(request, 'lista_contas_receber.html', {'contas_receber':contas_receber, 'total': total})
 
+@login_required(login_url='/login/')
 def lista_adicionar_pessoa(request):
     pessoas = Pessoa.objects.all()
     if request.method == 'POST':
@@ -53,6 +58,7 @@ def lista_adicionar_pessoa(request):
     form = PessoaForm()
     return render(request, 'lista_adicionar_pessoa.html', {'form': form, 'pessoas': pessoas})
 
+@login_required(login_url='/login/')
 def editar_pessoa(request, id_pessoa):
     pessoa = Pessoa.objects.get(id=id_pessoa)
     pessoas = Pessoa.objects.all()
@@ -64,6 +70,7 @@ def editar_pessoa(request, id_pessoa):
     form = PessoaForm(instance=pessoa)
     return render(request, 'lista_adicionar_pessoa.html', {'form': form, 'pessoas': pessoas})
 
+@login_required(login_url='/login/')
 def deletar_pessoa(request, id_pessoa):
     Pessoa.objects.get(id=id_pessoa).delete()
     return redirect('gestor:lista_adicionar_pessoa')

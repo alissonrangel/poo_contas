@@ -11,5 +11,6 @@ urlpatterns = [
     path('pessoas/', views.lista_adicionar_pessoa, name='lista_adicionar_pessoa'),
     path('editar-pessoa/<int:id_pessoa>/', views.editar_pessoa, name='editar_pessoa'),
     path('deletar-pessoa/<int:id_pessoa>/', views.deletar_pessoa, name='deletar_pessoa'),
+    path('login/', views.user_login, name='user_login'),
     path('', views.home, name='home'), # a url vazia fica por ultimo
 ]
