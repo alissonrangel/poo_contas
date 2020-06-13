@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link rel='stylesheet' href="{% static 'css/bootstrap.css' %}">
+    <title>{% block titulo %} Controle de Contas a Pagar e a Receber {% endblock titulo %}</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">Contas</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Menu
+                      </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'gestor:lista_contas_pagar' %}">Conta a Pagar</a>
+                        <a class="dropdown-item" href="{% url 'gestor:lista_contas_receber' %}">Conta a Receber</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'gestor:lista_adicionar_pessoa' %}">Adicionar pessoa</a>
+                        <a class="dropdown-item" href="{% url 'gestor:adicionar_conta' %}">Adicionar nova conta</a>
+                    </div>
+                </li>
+
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Busca" aria-label="Search">
+                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Buscar</button>
+            </form>
+        </div>
+    </nav>
+
+
+    <div class='container'>
+        <div class="row">
+            <div class="col-12">
+                {% block corpo %}
+                <h1>Lista de contas a pagar e receber</h1>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Código</th>
+                            <th scope="col">Credor/Devedor</th>
+                            <th scope="col">Tipo de Conta</th>
+                            <th scope="col">Vencimento</th>
+                            <th scope="col">Valor R$</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for conta in lista_contas %}
+                        <tr>
+                            <th scope="row">{{ conta.id }}</th>
+                            <td>{{ conta.pessoa.nome }}</td>
+                            <td>{{ conta.get_tipo_conta_display }}</td>
+                            <td>{{ conta.vencimento }}</td>
+                            <td>R$ {{ conta.valor }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endblock corpo %}
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+</body>
+
+</html>

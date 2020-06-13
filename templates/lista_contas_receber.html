@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% block titulo %} Lista de Contas a Receber | {{ block.super }} {% endblock titulo %} {% block corpo %}
+<h1>Contas a Receber</h1>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Código</th>
+            <th scope="col">Devedor</th>
+            <th scope="col">Tipo de Conta</th>
+            <th scope="col">Vencimento</th>
+            <th scope="col">Valor R$</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for conta in contas_receber %}
+        <tr>
+            <th scope="row">{{ conta.id }}</th>
+            <td>{{ conta.pessoa.nome }}</td>
+            <td>{{ conta.get_tipo_conta_display }}</td>
+            <td>{{ conta.vencimento }}</td>
+            <td>R$ {{ conta.valor }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<span>Total de Contas a Receber: R$ {{ total }}</span>
+<!-- -->
+{% endblock corpo %}

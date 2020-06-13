@@ -1,0 +1,27 @@
+{% extends 'base.html' %} 
+{% load widget_tweaks %}
+{% block titulo %} Adicionar nova conta {% endblock titulo %} {% block corpo %}
+
+<h1>Adicionar nova conta</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="{{ form.pessoa.id_for_label }}">{{ form.pessoa.label }}</label>
+        {% render_field form.pessoa class="form-control" %}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.tipo_conta.id_for_label }}">{{ form.tipo_conta.label }}</label>
+        {% render_field form.tipo_conta class="form-control" %}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.vencimento.id_for_label }}">{{ form.vencimento.label }}</label>
+        {% render_field form.vencimento class="form-control" %}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.valor.id_for_label }}">{{ form.valor.label }}</label>
+        {% render_field form.valor class="form-control" %}
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+</form>
+{% endblock corpo %}
