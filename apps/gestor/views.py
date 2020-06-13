@@ -48,3 +48,7 @@ def editar_pessoa(request, id_pessoa):
             return redirect('gestor:lista_adicionar_pessoa')
     form = PessoaForm(instance=pessoa)
     return render(request, 'lista_adicionar_pessoa.html', {'form': form, 'pessoas': pessoas})
+
+def deletar_pessoa(request, id_pessoa):
+    Pessoa.objects.get(id=id_pessoa).delete()
+    return redirect('gestor:lista_adicionar_pessoa')
