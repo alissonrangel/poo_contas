@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 from .models import Conta, Pessoa
-from .forms import ContaForm, PessoaForm
+from .forms import ContaForm, PessoaForm, UserForm
 # Create your views here.
 
 def user_login(request):
@@ -24,6 +24,17 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('gestor:user_login')
+
+def add_user(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            f = form.save(commit=False)
+            f.set_password(f.password)
+            f.save()
+            return redirect('gestor:user_login')
+    form = UserForm()
+    return render(request, 'add_user.html', {'form': form})
 
 @login_required(login_url='/login/')
 def home(request):
