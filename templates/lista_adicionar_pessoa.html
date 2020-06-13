@@ -42,7 +42,7 @@
             <td>{{ pessoa.cpf }}</td>
             <td colspan="2">
                 <a href="{% url 'gestor:editar_pessoa' pessoa.id %}" class="btn btn-primary btn-sm">Editar</a>
-                <a href="" class="btn btn-danger btn-sm">Deletar</a>
+                <a href="{% url 'gestor:deletar_pessoa' pessoa.id %}" class="btn btn-danger btn-sm">Deletar</a>
             </td>
         </tr>
         {% endfor %}
