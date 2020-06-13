@@ -20,7 +20,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -32,6 +32,9 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{% url 'gestor:lista_adicionar_pessoa' %}">Adicionar pessoa</a>
                         <a class="dropdown-item" href="{% url 'gestor:adicionar_conta' %}">Adicionar nova conta</a>
+                        <div class="dropdown-divider"></div>
+                        {% if user.is_authenticated %}
+                        <a class="dropdown-item" href="{% url 'gestor:user_logout' %}">Sair</a> {% endif %}
                     </div>
                 </li>
 

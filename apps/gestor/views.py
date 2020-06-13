@@ -21,6 +21,11 @@ def user_login(request):
     return render(request, 'user_login.html', {})
 
 @login_required(login_url='/login/')
+def user_logout(request):
+    logout(request)
+    return redirect('gestor:user_login')
+
+@login_required(login_url='/login/')
 def home(request):
     lista_contas = Conta.objects.all()  # QuerySet
     return render(request, 'base.html', {'lista_contas' : lista_contas})
