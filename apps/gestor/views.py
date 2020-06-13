@@ -1,10 +1,25 @@
 from django.shortcuts import render, redirect
 from django.db.models import Sum
+from djando.contrib.auth.decorators import login_required
+from djando.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 from .models import Conta, Pessoa
 from .forms import ContaForm, PessoaForm
 # Create your views here.
 
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('gestor:home')
+        else:
+            messages.error(request, 'Usuário ou senha inválido.')
+    return render(request, 'user_login.html', {})
+    
 def home(request):
     lista_contas = Conta.objects.all()  # QuerySet
     return render(request, 'base.html', {'lista_contas' : lista_contas})
